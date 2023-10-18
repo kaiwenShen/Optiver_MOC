@@ -41,3 +41,10 @@ then rough fill probability for bid-ask = 0.5 0.5
 24. <s>volume imbalance at best-bid-and-ask: (bid_size-ask_size)/(bid_size+ask_size)</s>
 25. <s>MOC flag: nasdaq don't accept moc order after 3:55. i.e. second in bucket >= 300</s>
 26. longer memory: correlation with certain window.
+### Market mechanism design induced predictive power: order allowed before market open -> looking for a better <u>BID</u> price
+27. NASDAQ allows posting closing orders before the closing auction starts at 3:50. Only people looking for better execution 
+price will post closing orders when the normal trading starts. so the relative volume at the first tick -> how volatile this stock is
+during the normal trading time compare to other stocks
+28. Also the imbalance direction for the first tick should be predictive of the day trading trend. should be buy heavy.
+### academic idea: E[IO] = 0, uninformed would profit by absorbing the imbalance. 
+29. Decay speed: how fast IO is decaying. -> uninformed /MM  
