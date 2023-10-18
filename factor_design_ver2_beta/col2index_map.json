@@ -1,0 +1,1 @@
+{"stock_id": 0, "date_id": 1, "seconds_in_bucket": 2, "imbalance_size": 3, "imbalance_buy_sell_flag": 4, "reference_price": 5, "matched_size": 6, "far_price": 7, "near_price": 8, "bid_price": 9, "bid_size": 10, "ask_price": 11, "ask_size": 12, "wap": 13, "time_id": 14, "row_id": 15}
