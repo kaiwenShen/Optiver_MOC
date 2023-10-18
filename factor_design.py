@@ -57,17 +57,16 @@ As the time of concatenation operation for pandas csv or numpy array increases e
 we pre-define a 10-year numpy array to save all the test data coming in the order of time interval
 '''
 hist_list = []
-current_row = 0 # this is the tracker to track which row we are currently at
 all_test = {}
 testing_factor = {}
 final_factor_value = {}
 
-overhead_start = time()
+# overhead_start = time()
 df_train['slice_index'] = df_train['date_id'].astype(str) + '_' + df_train['seconds_in_bucket'].astype(str)  # 3 seconds
 df_train_dic_sorted = df_train.drop(columns=['target']).groupby('slice_index').agg(lambda x: x.tolist()).to_dict('index')  # 1min
-overhead_end = time()
+# overhead_end = time()
 
-overhead_time = overhead_end - overhead_start
+# overhead_time = overhead_end - overhead_start
 
 time_start = time()
 print("Start calculating factors")
@@ -79,6 +78,7 @@ for date_id in range(num_dates):
         '''
         seconds_in_bucket = seconds_in_bucket * 10 # will be REMOVED
         # The new_test_data will be replaced by the test dataset iterated during the Optiver test environment
+        # THIS PART WILL NEED MODIFICATION SINCE WE ONLY HAVE test df in Optiver test environment, change to dict needs time on each interval
         # time_start_query = time()
         new_test_data = df_train_dic_sorted[f'{date_id}_{seconds_in_bucket}']
         # time_end_query = time()
@@ -93,11 +93,14 @@ for date_id in range(num_dates):
                                                                                  hist_list=hist_list)
         # time_factor_calc_end = time()
         # print(f"On {date_id} and {seconds_in_bucket} Read df Used: {time_factor_calc_end - time_factor_calc_start} seconds")
-        current_row = current_row + len(new_test_data)
     if date_id % 20 == 0:
         print(f"At date {date_id} now")
 time_end = time()
 
+
+'''
+We will provide the 
+'''
 time_used_for_factor_calculating = time_end - time_start
 time_threshold = 300
 if time_used_for_factor_calculating >= time_threshold:
