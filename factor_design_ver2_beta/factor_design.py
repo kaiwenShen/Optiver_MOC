@@ -40,12 +40,12 @@ def run_factor_value(df_train,factor_function):
     all_test = {}
     testing_factor = {}
     final_factor_value = {}
-
+    print("Start reading df")
     # overhead_start = time()
     df_train['slice_index'] = df_train['date_id'].astype(str) + '_' + df_train['seconds_in_bucket'].astype(str)  # 3 seconds
     df_train_dic_sorted = df_train.drop(columns=['target']).groupby('slice_index').agg(lambda x: x.tolist()).to_dict('index')  # 1min
     # overhead_end = time()
-
+    print("Finish reading df")
     # overhead_time = overhead_end - overhead_start
 
     time_start = time()
@@ -73,8 +73,8 @@ def run_factor_value(df_train,factor_function):
                                                                                      hist_list=hist_list)
             # time_factor_calc_end = time()
             # print(f"On {date_id} and {seconds_in_bucket} Read df Used: {time_factor_calc_end - time_factor_calc_start} seconds")
-        if date_id % 20 == 0:
-            print(f"At date {date_id} now")
+        # if date_id % 20 == 0:
+        #     print(f"At date {date_id} now")
     time_end = time()
 
 

@@ -1,3 +1,6 @@
 
 *.csv
 factors.json
+/factor_design_ver2_beta.zip
+/new_factor.json
+/original_factor_dict.json

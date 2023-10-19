@@ -3,9 +3,11 @@ This script is designed for various helper functions for designing and testing f
 '''
 import numpy as np
 import json
+
 testing_factors = {}
 existed_factors = {}
 factor_performance = {}
+
 
 def add_factor_to_testing(factor_name: str, factor_value: np.ndarray, test_type: str) -> None:
     '''
@@ -20,7 +22,7 @@ def add_factor_to_testing(factor_name: str, factor_value: np.ndarray, test_type:
     testing_factors: A dictionary that will store all the factors waiting to be tested
     '''
     testing_factors[f"{factor_name}_{test_type}"] = factor_value
-    
+
     with open('testing_factors.json', 'w') as json_file:
         json.dump(testing_factors, json_file)
 
@@ -38,10 +40,10 @@ def add_factor_to_existed(factor_name: str, factor_value: np.ndarray, test_type:
     existed_factors: A dictionary that will store all the passed factors.
     '''
     existed_factors[f"{factor_name}_{test_type}"] = factor_value
-    
+
     with open('existed_factors.json', 'w') as json_file:
         json.dump(existed_factors, json_file)
-    
+
 
 def add_factor_performance(factor_name: str, factor_performance_score: np.ndarray, test_type: str) -> None:
     '''
@@ -55,12 +57,29 @@ def add_factor_performance(factor_name: str, factor_performance_score: np.ndarra
     must be train or test
     '''
     factor_performance[f"{factor_name}_{test_type}"] = factor_performance_score
-    
+
     with open('factor_performance.json', 'w') as json_file:
         json.dump(factor_performance, json_file)
+
+
 def load_json(file_name):
     with open(file_name, 'r') as json_file:
         return json.load(json_file)
 
-def flatten_factor_value(factor_value_dictionary,factor_name):
+
+def dump_json(dictionary, file_name):
+    # because np.ndarray is not json serializable
+    for key in dictionary.keys():
+        dictionary[key] = dictionary[key].tolist()
+    with open(file_name, 'w') as json_file:
+        json.dump(dictionary, json_file)
+
+def load_json_dict(file_name):
+    # load factor dictionary and convert the value to np.ndarray
+    res = load_json(file_name)
+    for key in res.keys():
+        res[key] = np.array(res[key], dtype=np.float64)
+    return res
+
+def flatten_factor_value(factor_value_dictionary, factor_name):
     return {factor_name: np.array([item for sublist in list(factor_value_dictionary.values()) for item in sublist])}
