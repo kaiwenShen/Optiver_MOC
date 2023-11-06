@@ -124,3 +124,7 @@ def add_factor_to_OTS_test(factor_name: str) -> None:
 
     with open('testing_factors_OTS.json', 'w') as json_file:
         json.dump(testing_factors_OTS, json_file)
+
+def ols_res(x,y,fraction):
+    beta = np.dot(x,y)/np.dot(x,x)
+    return y-fraction*beta*x
