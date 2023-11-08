@@ -8,7 +8,7 @@ factor_performance: A dictionary stored all the existed factors' performance sco
 '''
 import numpy as np
 from . import utils
-# from time import time
+from time import time
 import json
 target_on_train = np.load('./factor_design_ver2_beta/target_on_train.npy')
 target_on_train[np.isnan(target_on_train)] = 0
@@ -97,6 +97,8 @@ class Factor_Backtest:
         '''
         We will check the factor performance followed by the above three steps
         '''
+        pass_factors_list = []
+        failed_factors_list = []
         for factor_name, factor_value in self.testing_factors.items():
             print(f"Start testing factor: {factor_name}..........")
             self.check_in_sample_performance(factor_name, factor_value)
@@ -104,6 +106,10 @@ class Factor_Backtest:
             if sum(self.passed_factors[factor_name]) == 2:
                 print(f"Factor {factor_name} passed all the tests, and will be added to the factors for out-of-sample testing")
                 utils.add_factor_to_OTS_test(factor_name=factor_name)
+                pass_factors_list.append(factor_name)
             else:
+                failed_factors_list.append(factor_name)
                 print(f"Factor {factor_name} failed one of the tests, and will not be added to the factors for out-of-sample testing")
+        print(f"Factors passed all the tests: {pass_factors_list}")
+        print(f"Factors failed at least one of the tests: {failed_factors_list}")
 
