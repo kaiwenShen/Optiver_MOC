@@ -42,7 +42,7 @@ def add_factor_to_OTS_test(factor_name: str) -> None:
     factor_value: A numpy array stores the factor values
     '''
     # load testing_factors_OTS json file
-    testing_factors_OTS = load_json('./factor_design_ver3_beta/testing_factors_OTS.json')
+    testing_factors_OTS = load_json('./factor_design_distributed_ver1/testing_factors_OTS.json')
     testing_factors_OTS[factor_name] = [] # append new factor name into the json file
 
     with open('testing_factors_OTS.json', 'w') as json_file:
@@ -60,8 +60,8 @@ def add_factor_to_existed() -> None:
     must be train or test
     existed_factors: A dictionary that will store all the passed factors.
     '''
-    existed_factors = load_json_factors('./factor_design_ver3_beta/existed_factors.json')
-    file_pattern = "./factor_design_ver3_beta/tmp*.json"
+    existed_factors = load_json_factors('./factor_design_distributed_ver1/existed_factors.json')
+    file_pattern = "./factor_design_distributed_ver1/tmp*.json"
     matching_files = glob.glob(file_pattern)
     print(f"matching files: {matching_files}")
     for file in matching_files:
@@ -70,7 +70,7 @@ def add_factor_to_existed() -> None:
             for key in tmp.keys():
                 existed_factors[key] = np.array(tmp[key], dtype=np.float64)
             print(f"{file} added to existed_factors")
-    dump_json_factors(existed_factors, './factor_design_ver3_beta/existed_factors.json')
+    dump_json_factors(existed_factors, './factor_design_distributed_ver1/existed_factors.json')
 
 
 def add_factor_performance(factor_name: str, factor_performance_score: np.ndarray, test_type: str) -> None:
